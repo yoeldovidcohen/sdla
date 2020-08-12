@@ -109,22 +109,8 @@ int main(int argc, char *args[])
             //Update the surface
             SDL_UpdateWindowSurface(gWindow);
 
-            bool gameRunning = true;
-
-            SDL_Event event;
-
-            while (gameRunning)
-            {
-                // Get our controls and events
-                while (SDL_PollEvent(&event))
-                {
-                    if (event.type == SDL_QUIT)
-                        gameRunning = false;
-                }
-            }
-
-            //Wait two seconds
-            SDL_Delay(2000);
+                        //Wait two seconds
+            SDL_Delay(20000);
         }
     }
 
