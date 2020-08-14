@@ -3,6 +3,8 @@ and may not be redistributed without written permission.*/
 
 //Using SDL, standard IO, and strings
 #include <SDL.h>
+#include <SDL_image.h>
+
 #include <stdio.h>
 #include <string>
 
@@ -53,8 +55,18 @@ bool init()
         }
         else
         {
-            //Get window surface
-            gScreenSurface = SDL_GetWindowSurface(gWindow);
+            //Initialize PNG loading
+            int imgFlags = IMG_INIT_PNG;
+            if (!(IMG_Init(imgFlags) & imgFlags))
+            {
+                printf("SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError());
+                success = false;
+            }
+            else
+            {
+                //Get window surface
+                gScreenSurface = SDL_GetWindowSurface(gWindow);
+            }
         }
     }
 
@@ -67,7 +79,7 @@ bool loadMedia()
     bool success = true;
 
     //Load stretching surface
-    gStretchedSurface = loadSurface("../stretch.bmp");
+    gStretchedSurface = loadSurface("../preview.png");
     if (gStretchedSurface == NULL)
     {
         printf("Failed to load stretching image!\n");
@@ -97,10 +109,10 @@ SDL_Surface *loadSurface(std::string path)
     SDL_Surface *optimizedSurface = NULL;
 
     //Load image at specified path
-    SDL_Surface *loadedSurface = SDL_LoadBMP(path.c_str());
+    SDL_Surface *loadedSurface = IMG_Load(path.c_str());
     if (loadedSurface == NULL)
     {
-        printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
+        printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
     }
     else
     {
