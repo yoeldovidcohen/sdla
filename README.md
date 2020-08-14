@@ -1,4 +1,3 @@
 # sdla
 
-learning sdl
-using vcpkg 
+My first project with https://www.libsdl.org/
